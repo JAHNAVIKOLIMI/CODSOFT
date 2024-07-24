@@ -1,0 +1,38 @@
+import java.util.*;
+public class NUMBER_GAME {
+	public static void main(String[] args) {
+		boolean choose=true;
+		while(choose) {
+			int score=0;
+			System.out.println("You have 3 Choices");
+			Scanner sc=new Scanner(System.in);
+			Random random=new Random();
+			int num=random.nextInt(101); //generates 0-100 
+			for(int i=0;i<3;i++) {
+				System.out.println("Take a guess of the number");
+				int guess=sc.nextInt();
+				if(guess<num) {
+					System.out.println("Too High");
+				 score+=0.5;
+				}
+				else if(guess==num) {
+					System.out.println("Your guess is right ! Hurray");
+					score+=1;
+				}
+				else {
+					System.out.println("Too Low");
+					score-=1;
+				}
+			}
+			System.out.println("Your score is:"+score);
+			System.out.println("Do you want to continue the game :\n Enter yes or no");
+			String en=sc.next();
+			char c=en.toLowerCase().charAt(0);
+			if(c=='y') choose=true;
+			else choose =false;
+		}
+		System.out.println("Thank you !! That was fun ");
+
+	}
+
+}
