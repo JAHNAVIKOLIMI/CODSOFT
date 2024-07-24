@@ -1,0 +1,80 @@
+Pre-Requisite: create a database and tables  in mysql Command line Client and add mysql-Connector jar file to the java program
+
+import java.util.*;
+import java.sql.*;
+public class STUDENT_COURSE_REGISTRATION_SYSTEM {
+	public static void main(String[] args) {
+		try {
+			boolean conti=true;
+			System.out.println("Welcome to the Student Registration System");
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/codsoft","root","jahnavi");
+			while(conti) {
+				System.out.println("\nEnter 1 to view all the courses\nEnter 2 to enroll for a course\nEnter 3 to drop a course which is alredy registered\nEnter 4 to See the registered students\nEnter 5 to exit");
+			Scanner sc=new Scanner(System.in);
+	int choice=sc.nextInt();
+	switch(choice) {
+	case 1:
+		PreparedStatement ps=con.prepareStatement("select * from course_database");
+		ResultSet rs=ps.executeQuery();
+		while(rs.next()) {
+			System.out.println("Course Code:"+rs.getString(1)+" Course Name:"+rs.getString(2)+" Coure Description:"+rs.getString(3)+" Course Schedule:"+rs.getString(4));
+		}
+		rs.close();
+		ps.close();
+		break;
+	case 2:
+		System.out.println("Enter your id:");
+		int id=sc.nextInt();
+		System.out.println("Enter your name:");
+		String name =sc.next();
+		System.out.println("Enter the course that you want to register:");
+		String course_name=sc.next();
+		PreparedStatement ps1=con.prepareStatement("insert into student_database values(?,?,?);");
+		ps1.setInt(1, id);
+		ps1.setString(2,name);
+		ps1.setString(3,course_name);
+		int i=ps1.executeUpdate();
+		if(i>0) System.out.println("Dear "+name+" you have successfully registered the course "+course_name);
+		else System.out.println("Could not register the course ...Try Again!!");
+ps1.close();
+break;
+	case 3:
+		System.out.println("Enter your registered id (id) to unregister the course");
+		int id1=sc.nextInt();
+		PreparedStatement ps2=con.prepareStatement("delete from student_database where id=?;");
+		ps2.setInt(1, id1);
+		int j=ps2.executeUpdate();
+		if(j>0) System.out.println("You have unregistered the course successfully");
+		else System.out.println("Could not drop the course ...Try Again!!");
+		ps2.close();
+		break;
+	case 4:
+		PreparedStatement ps3=con.prepareStatement("select * from student_database");
+		ResultSet rs1=ps3.executeQuery();
+		while(rs1.next()) {
+			System.out.println("Student id:"+rs1.getInt(1)+" Student Name:"+rs1.getString(2)+" Registered course:"+rs1.getString(3));
+		}
+		rs1.close();
+		ps3.close();
+		break;
+		
+	case 5:
+		conti=false;
+		System.out.println("Thank you!!");
+		break;
+	 default:
+		 System.out.println("Enter valid choice only between 1,2,3");
+		 break;
+		
+	}
+	
+	}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+}
