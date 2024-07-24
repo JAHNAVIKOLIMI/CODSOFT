@@ -1,0 +1,50 @@
+import java.util.*;
+import java.math.*;
+
+public class STUDENT_GRADE_CALCULATOR {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        boolean conti = true;
+
+        while (conti) {
+            int sum = 0;  
+            System.out.println("Welcome to Student Grade Calculator");
+            System.out.println("Enter the number of subjects:");
+            int n = sc.nextInt();
+            int marks[] = new int[n];
+
+            for (int i = 0; i < marks.length; i++) {
+                System.out.println("Enter Course " + (i + 1) + " marks:");
+                marks[i] = sc.nextInt();
+                sum += marks[i];
+            }
+
+            int avg_percentage = (sum / n);
+            System.out.println("You have obtained a total of " + sum + " out of " + (n * 100));
+            System.out.println("Your average percentage is: " + avg_percentage+" %");
+
+            if (avg_percentage > 90) {
+                System.out.println("You have obtained Grade O\nCongratulations");
+            } else if (avg_percentage <= 90 && avg_percentage > 80) {
+                System.out.println("You have obtained Grade A+\nVery Good");
+            } else if (avg_percentage <= 80 && avg_percentage > 70) {
+                System.out.println("You have obtained Grade A\nGood");
+            } else if (avg_percentage <= 70 && avg_percentage > 60) {
+                System.out.println("You have obtained Grade B\nNeeds Improvement");
+            } else if (avg_percentage <= 60 && avg_percentage > 50) {
+                System.out.println("You have obtained Grade C\nAverage");
+            } else if (avg_percentage <= 50 && avg_percentage > 40) {
+                System.out.println("You have obtained Grade D\nBad");
+            } else {
+                System.out.println("You have obtained Grade F\nYou have failed. Better Luck Next Time");
+            }
+
+            System.out.println("Do you want to continue with the calculator? Choose yes or no");
+            String choice = sc.next();
+            char c = choice.toLowerCase().charAt(0);
+           if(c=='y') conti=true;
+           else conti=false;
+        }
+        System.out.println("Thank you!!");
+    }
+}
